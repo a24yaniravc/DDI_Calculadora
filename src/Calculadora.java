@@ -6,7 +6,7 @@ public class Calculadora extends JFrame {
     private JTextField resultado = new JTextField();
     private JTextField pantalla = new JTextField();
     private Boolean calculated = false;
-    
+
     public Calculadora() {
         // Configuración ventana
         setTitle("Calculadora");
@@ -34,10 +34,10 @@ public class Calculadora extends JFrame {
 
         // Botones de la calculadora
         String[] botones = {
-            "7", "8", "9", "/",
-            "4", "5", "6", "*",
-            "1", "2", "3", "-",
-            "C", "0", ".", "+"
+                "7", "8", "9", "/",
+                "4", "5", "6", "*",
+                "1", "2", "3", "-",
+                "C", "0", ".", "+"
         };
 
         // Recorremos el array para crear los botones con menos código
@@ -57,20 +57,27 @@ public class Calculadora extends JFrame {
         panelBotonIgual.add(botonIgual);
         add(panelBotonIgual);
 
-
         // Calcular resultado
         ActionListener calcularIgual = e -> {
+            if (resultado.getText().contains("=")) {
+                resultado.setText(resultado.getText());
+                return;
+            }
+            if (pantalla.getText().isEmpty()) {
+                return;
+            }
             String textoAnterior = resultado.getText();
             if (!textoAnterior.isEmpty()) {
                 pantalla.setText(textoAnterior + pantalla.getText());
             }
             String expresion = pantalla.getText();
-            String resultado = calcularResultado(expresion);
-            pantalla.setText(resultado);
+            resultado.setText(expresion + " =");
+            String result = calcularResultado(expresion);
+            pantalla.setText(result);
             calculated = true;
         };
 
-        botonIgual.addActionListener(calcularIgual); 
+        botonIgual.addActionListener(calcularIgual);
 
         // Introducción de funcionalidad botones
         for (Component comp : panelBotones.getComponents()) {
@@ -83,13 +90,18 @@ public class Calculadora extends JFrame {
                             pantalla.setText("");
                             resultado.setText("");
                             break;
-                        case "+","-","*","/":
+                        case "+", "-", "*", "/":
                             if (resultado.getText().isEmpty() && pantalla.getText().isEmpty()) {
                                 break;
                             } // No permitir operador al inicio
 
+                            if (resultado.getText().contains("+") || resultado.getText().contains("-")
+                                    || resultado.getText().contains("*") || resultado.getText().contains("/")) {
+                                resultado.setText(resultado.getText());
+                            }
+
                             if (!resultado.getText().isEmpty() && !pantalla.getText().isEmpty()) {
-                                
+
                             }
                             String currentText = pantalla.getText();
                             pantalla.setText("");
@@ -101,7 +113,8 @@ public class Calculadora extends JFrame {
                                 resultado.setText("");
                                 calculated = false;
                             }
-                            if (pantalla.getText().equals("Error: División por cero") || pantalla.getText().equals("Error: Expresión inválida")) {
+                            if (pantalla.getText().equals("Error: División por cero")
+                                    || pantalla.getText().equals("Error: Expresión inválida")) {
                                 pantalla.setText("");
                                 resultado.setText("");
                             }
