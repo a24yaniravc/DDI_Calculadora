@@ -14,17 +14,26 @@ public class Calculadora extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
+        getContentPane().setBackground(new Color(0,0,0));
 
         // Panel resultado
-        resultado.setBounds(10, 10, 360, 20);
+        resultado.setBounds(10, 15, 360, 20);
         resultado.setEditable(false);
         resultado.setHorizontalAlignment(JTextField.RIGHT);
+        resultado.setFont(new Font("Arial", Font.PLAIN, 15));
+        resultado.setBackground(new Color(0,0,0));
+        resultado.setForeground(Color.GRAY);
+        resultado.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(resultado);
 
         // Panel pantalla
         pantalla.setBounds(10, 40, 360, 80);
         pantalla.setEditable(false);
         pantalla.setHorizontalAlignment(JTextField.RIGHT);
+        pantalla.setFont(new Font("Arial", Font.BOLD, 30));
+        pantalla.setBackground(new Color(0,0,0));
+        pantalla.setForeground(Color.WHITE);
+        pantalla.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         add(pantalla);
 
         // Boton C (Clear)
@@ -32,6 +41,10 @@ public class Calculadora extends JFrame {
         panelBotonC.setLayout(new GridLayout(1, 1));
         panelBotonC.setBounds(10, 130, 360, 50);
         JButton botonC = new JButton("C");
+        botonC.setBackground(Color.GRAY);
+        botonC.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        botonC.setForeground(Color.WHITE);
+
         panelBotonC.add(botonC);
         add(panelBotonC);
 
@@ -44,6 +57,7 @@ public class Calculadora extends JFrame {
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(4, 4, 5, 5));
         panelBotones.setBounds(10, 190, 360, 340);
+        panelBotones.setBackground(new Color(0,0,0));
 
         // Botones de la calculadora (excepto el igual y la C)
         String[] botones = {
@@ -58,6 +72,15 @@ public class Calculadora extends JFrame {
             if (!texto.equals("")) { // No crear botón para el punto
                 JButton boton = new JButton(texto);
                 panelBotones.add(boton);
+                boton.setFont(new Font("Arial", Font.BOLD, 20));
+                boton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                if ("+-*/".contains(texto)) {
+                    boton.setBackground(new Color(255, 146, 0));
+                    boton.setForeground(Color.BLACK);
+                } else {
+                    boton.setBackground(new Color(47, 47, 47));
+                    boton.setForeground(Color.WHITE);
+                }
             } else {
                 panelBotones.add(new JLabel()); // Espacio vacío
             }
@@ -71,6 +94,9 @@ public class Calculadora extends JFrame {
         panelBotonIgual.setBounds(10, 540, 360, 50);
 
         JButton botonIgual = new JButton("=");
+        botonIgual.setBackground(new Color(255, 146, 0));
+        botonIgual.setForeground(Color.WHITE);
+        botonIgual.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panelBotonIgual.add(botonIgual);
         add(panelBotonIgual);
 
